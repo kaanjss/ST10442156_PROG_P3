@@ -177,9 +177,9 @@ setup_database.sql  # Database setup
 
 ## Version Control
 
-- **Repository:** https://github.com/kaanjss/st10442156_prog6212_poepart1.git
+- **Repository:** https://github.com/kaanjss/ST10442156_PROG_P3.git
+- **Commits:** 12 descriptive commits documenting development process
 - **Branch:** main
-- **Clean commit history with complete POE Part 3 implementation**
 
 ---
 
