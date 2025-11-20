@@ -23,9 +23,9 @@
 			</div>
 		}
 
-		<div class="card border-0">
+			<div class="card border-0">
 			<div class="card-body p-4">
-				<form asp-action="Submit" method="post" id="claimForm">
+				<form asp-action="Submit" method="post" enctype="multipart/form-data" id="claimForm">
 					@Html.AntiForgeryToken()
 					<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
@@ -201,6 +201,40 @@
 
 					<hr class="my-4" />
 
+					<!-- Supporting Documents Section -->
+					<div class="mb-4">
+						<h5 class="card-title mb-3">
+							<i class="bi bi-paperclip"></i> Supporting Documents (Optional)
+						</h5>
+						<div class="alert alert-info small mb-3">
+							<strong><i class="bi bi-info-circle"></i> Tip:</strong> Upload supporting documents such as timesheets, attendance records, or any relevant evidence for your claim.
+						</div>
+						
+						<div class="mb-3">
+							<label for="supportingDocuments" class="form-label fw-semibold">
+								Select Documents to Upload (Optional)
+							</label>
+							<input type="file" 
+								   class="form-control" 
+								   id="supportingDocuments" 
+								   name="SupportingDocuments" 
+								   multiple 
+								   accept=".pdf,.docx,.doc,.xlsx,.xls" />
+							<div class="form-text">
+								<strong>Allowed formats:</strong> PDF, DOCX, DOC, XLSX, XLS<br/>
+								<strong>Maximum file size:</strong> 5 MB per file<br/>
+								<strong>Note:</strong> You can select multiple files at once. Documents can also be uploaded later.
+							</div>
+						</div>
+
+						<div id="selectedFilesPreview" style="display: none;" class="mb-3">
+							<h6 class="fw-semibold">Selected Files:</h6>
+							<div id="filesList" class="alert alert-secondary small mb-0"></div>
+						</div>
+					</div>
+
+					<hr class="my-4" />
+
 					<!-- Summary Section -->
 					<div class="mb-4">
 						<div class="card bg-light border-0">
@@ -258,6 +292,7 @@
 			updateCalculations();
 			updateRowNumbers();
 			updateCharacterCount();
+			setupFilePreview();
 
 			// Add new activity row
 			$('#addRowBtn').click(function() {
@@ -383,6 +418,49 @@
 		function updateCharacterCount() {
 			const count = $('#AdditionalNotes').val().length;
 			$('#notesCharCount').text(count);
+		}
+
+		function setupFilePreview() {
+			$('#supportingDocuments').on('change', function() {
+				const files = this.files;
+				if (files.length > 0) {
+					let filesList = '<ul class="mb-0">';
+					const maxSize = 5 * 1024 * 1024; // 5 MB
+					let hasError = false;
+
+					for (let i = 0; i < files.length; i++) {
+						const file = files[i];
+						const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+						const extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+						const allowedExtensions = ['.pdf', '.docx', '.doc', '.xlsx', '.xls'];
+
+						let statusIcon = '✓';
+						let statusClass = 'text-success';
+
+						if (file.size > maxSize) {
+							statusIcon = '✗';
+							statusClass = 'text-danger';
+							hasError = true;
+						} else if (!allowedExtensions.includes(extension)) {
+							statusIcon = '✗';
+							statusClass = 'text-danger';
+							hasError = true;
+						}
+
+						filesList += `<li class="${statusClass}"><strong>${statusIcon}</strong> ${file.name} (${sizeInMB} MB)</li>`;
+					}
+					filesList += '</ul>';
+
+					if (hasError) {
+						filesList += '<div class="text-danger small mt-2"><strong>Warning:</strong> Some files are invalid and will not be uploaded.</div>';
+					}
+
+					$('#filesList').html(filesList);
+					$('#selectedFilesPreview').show();
+				} else {
+					$('#selectedFilesPreview').hide();
+				}
+			});
 		}
 	</script>
 }

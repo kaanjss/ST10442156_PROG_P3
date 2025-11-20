@@ -10,6 +10,7 @@ public class Claim
 	public decimal TotalHours { get; set; }
 	public decimal Amount { get; set; }
 	public ClaimStatus Status { get; set; } = ClaimStatus.Draft;
+	public string? AdditionalNotes { get; set; }
 	
 	// Navigation properties
 	public virtual Lecturer? Lecturer { get; set; }

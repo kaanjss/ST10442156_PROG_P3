@@ -54,7 +54,7 @@ public class LecturerController : Controller
 
 	[HttpPost]
 	[ValidateAntiForgeryToken]
-	public IActionResult Submit(ClaimSubmissionViewModel model)
+	public async Task<IActionResult> Submit(ClaimSubmissionViewModel model)
 	{
 		try
 		{
@@ -80,6 +80,27 @@ public class LecturerController : Controller
 				}
 			}
 
+			// Validate uploaded files (if any)
+			if (model.SupportingDocuments != null && model.SupportingDocuments.Any())
+			{
+				var allowedExtensions = new[] { ".pdf", ".docx", ".doc", ".xlsx", ".xls" };
+				const long maxFileSize = 5 * 1024 * 1024; // 5 MB
+
+				foreach (var file in model.SupportingDocuments)
+				{
+					if (file.Length > maxFileSize)
+					{
+						ModelState.AddModelError("SupportingDocuments", $"File '{file.FileName}' exceeds the maximum size of 5 MB.");
+					}
+
+					var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+					if (!allowedExtensions.Contains(extension))
+					{
+						ModelState.AddModelError("SupportingDocuments", $"File '{file.FileName}' has an invalid extension. Only PDF, DOCX, DOC, XLSX, and XLS files are allowed.");
+					}
+				}
+			}
+
 			if (!ModelState.IsValid)
 			{
 				return View(model);
@@ -95,6 +116,7 @@ public class LecturerController : Controller
 				TotalHours = model.TotalHours,
 				Amount = model.TotalAmount,
 				Status = ClaimStatus.Submitted,
+				AdditionalNotes = model.AdditionalNotes,
 				Lines = model.Items.Select(item => new ClaimLine
 				{
 					ActivityDescription = item.ActivityDescription,
@@ -104,7 +126,53 @@ public class LecturerController : Controller
 
 			claim = _claimsService.AddClaim(claim);
 
-			TempData["SuccessMessage"] = $"Claim submitted successfully! Claim ID: {claim.Id}. Total Amount: R{claim.Amount:N2}";
+			// Handle document uploads (if any)
+			if (model.SupportingDocuments != null && model.SupportingDocuments.Any())
+			{
+				var allowedExtensions = new[] { ".pdf", ".docx", ".doc", ".xlsx", ".xls" };
+				
+				foreach (var file in model.SupportingDocuments)
+				{
+					if (file.Length == 0)
+						continue;
+
+					var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
+					if (!allowedExtensions.Contains(extension))
+						continue;
+
+					// Create uploads directory if it doesn't exist
+					var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", claim.Id.ToString());
+					Directory.CreateDirectory(uploadsPath);
+
+					// Generate unique filename
+					var uniqueFileName = $"{Guid.NewGuid()}{extension}";
+					var filePath = Path.Combine(uploadsPath, uniqueFileName);
+
+					// Save file to disk
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						await file.CopyToAsync(stream);
+					}
+
+					// Add document to claim
+					var document = new Document
+					{
+						FileName = file.FileName,
+						FilePath = $"/uploads/{claim.Id}/{uniqueFileName}",
+						UploadedAt = DateTime.UtcNow
+					};
+
+					_claimsService.AddDocumentToClaim(claim.Id, document);
+				}
+			}
+
+			var successMessage = $"Claim submitted successfully! Claim ID: {claim.Id}. Total Amount: R{claim.Amount:N2}";
+			if (model.SupportingDocuments != null && model.SupportingDocuments.Any())
+			{
+				successMessage += $" {model.SupportingDocuments.Count} document(s) uploaded.";
+			}
+
+			TempData["SuccessMessage"] = successMessage;
 			return RedirectToAction(nameof(MyClaims));
 		}
 		catch (Exception ex)

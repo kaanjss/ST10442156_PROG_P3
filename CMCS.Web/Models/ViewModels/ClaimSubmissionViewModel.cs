@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace CMCS.Web.Models.ViewModels;
 
@@ -20,6 +21,9 @@ public class ClaimSubmissionViewModel
 	[Display(Name = "Additional Notes")]
 	[StringLength(500, ErrorMessage = "Additional notes cannot exceed 500 characters")]
 	public string AdditionalNotes { get; set; } = string.Empty;
+
+	[Display(Name = "Supporting Documents")]
+	public List<IFormFile>? SupportingDocuments { get; set; }
 
 	public List<ClaimLineItem> Items { get; set; } = new();
 

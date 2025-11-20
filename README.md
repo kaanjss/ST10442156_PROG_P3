@@ -3,7 +3,7 @@
 **Student:** ST10442156  
 **Module:** PROG6212  
 **Assessment:** POE Part 3  
-**GitHub Repository:** https://github.com/kaanjss/st10442156_prog6212_poepart1.git
+**GitHub Repository:** https://github.com/kaanjss/ST10442156_PROG_P3.git
 
 ---
 
@@ -103,8 +103,8 @@ Navigate to: `http://localhost:5042`
 - File validation and management
 
 ### POE Part 2: "GitHub link missing"
-- Repository: https://github.com/kaanjss/st10442156_prog6212_poepart1.git
-- 20+ descriptive commits
+- Repository: https://github.com/kaanjss/ST10442156_PROG_P3.git
+- 13+ descriptive commits
 
 ---
 
@@ -178,7 +178,7 @@ setup_database.sql  # Database setup
 ## Version Control
 
 - **Repository:** https://github.com/kaanjss/ST10442156_PROG_P3.git
-- **Commits:** 12 descriptive commits documenting development process
+- **Commits:** 13+ descriptive commits documenting development process
 - **Branch:** main
 
 ---
