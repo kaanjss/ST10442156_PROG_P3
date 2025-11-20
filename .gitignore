@@ -17,4 +17,4 @@ wwwroot/uploads/
 
 # Ignore all markdown files except README
 *.md
-!README.md
+!README.md 
