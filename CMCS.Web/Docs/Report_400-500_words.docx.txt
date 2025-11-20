@@ -1,0 +1,24 @@
+Title: Contract Monthly Claim System (CMCS) — Part 1 Prototype
+
+Design Choices
+The CMCS prototype is built with ASP.NET Core MVC to separate concerns and keep the UI, controller logic, and models clean for future expansion. MVC also supports responsive Bootstrap styling out-of-the-box, enabling quick mockups aligned with web standards. While WPF could be used for a desktop variant, the web approach provides easier access for lecturers and administrators.
+
+Database Structure
+The proposed data model includes User, Claim, ClaimLine, Document, and Approval. Users represent Lecturers, Programme Coordinators, and Academic Managers. A Claim aggregates month/year, hourly rate, total hours, amount, and status. ClaimLine breaks down work activities and hours. Document stores uploaded file references. Approval records verification/approval outcomes with comments and timestamps. Relationships: User 1..* Claim; Claim 1..* ClaimLine; Claim 1..* Document; Claim 1..* Approval; User 1..* Approval (as Approver). This supports traceability and auditability.
+
+GUI Layout
+The prototype includes: Home landing with role cards; Lecturer Dashboard with quick links; Submit Claim form (non-functional) for month/year, hourly rate, and activities; My Claims table with status badges and document actions; Upload Documents screen with disabled file input; Coordinator and Manager views listing claims with a read-only Review page. A banner indicates the prototype is UI-only; no data is saved. All buttons that would trigger business logic are disabled.
+
+Assumptions and Constraints
+Institutional authentication will be integrated later. Documents are limited to reasonable sizes (e.g., <10MB). Only lecturers submit claims; coordinators verify; managers approve. This submission focuses on front-end structure only.
+
+Project Plan
+Week 1: Requirements & UML (class diagram, entities, relations). Week 2: MVC scaffold & navigation. Week 3: Build UI screens and shared layout. Week 4: Finalize documentation, add UML image, take screenshots, and make at least five Git commits.
+
+Version Control
+Commits are structured: initialization, prototype pages and layout, banner and privacy clarifications, UI polish (badges and modal), and documentation stubs. A remote repository will be added and pushed upon instruction.
+
+Conclusion
+The CMCS prototype establishes an intuitive, transparent interface for lecturers and administrators while deferring functionality to later stages. The data model and navigation are designed for scalability and clear responsibilities, laying a solid foundation for subsequent development.
+
+

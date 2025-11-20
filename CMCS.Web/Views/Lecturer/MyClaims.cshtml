@@ -1,0 +1,95 @@
+@model IEnumerable<CMCS.Web.Models.Claim>
+@{
+	ViewData["Title"] = "My Claims";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<div>
+		<h1 class="mb-1">My Claims</h1>
+		<p class="text-muted mb-0">View and track all your submitted claims</p>
+	</div>
+	<a asp-action="Submit" class="btn btn-primary">
+		+ Submit New Claim
+	</a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
+		<strong>Success!</strong> @TempData["SuccessMessage"]
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+}
+
+<div class="card border-0">
+	<div class="card-body p-0">
+		<div class="table-responsive">
+			<table class="table table-hover mb-0">
+				<thead class="table-light">
+					<tr>
+						<th>Claim #</th>
+						<th>Period</th>
+						<th>Status</th>
+						<th class="text-end">Total Hours</th>
+						<th class="text-end">Amount</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (Model.Any())
+					{
+						@foreach (var claim in Model)
+						{
+							var statusClass = claim.Status switch
+							{
+								CMCS.Web.Models.ClaimStatus.Draft => "bg-secondary",
+								CMCS.Web.Models.ClaimStatus.Submitted => "bg-primary",
+								CMCS.Web.Models.ClaimStatus.Verified => "bg-info",
+								CMCS.Web.Models.ClaimStatus.Approved => "bg-success",
+								CMCS.Web.Models.ClaimStatus.Rejected => "bg-danger",
+								CMCS.Web.Models.ClaimStatus.Settled => "bg-dark",
+								_ => "bg-secondary"
+							};
+							var monthName = new DateTime(claim.Year, claim.Month, 1).ToString("MMMM");
+
+							<tr>
+								<td class="fw-semibold">#@claim.Id</td>
+								<td>@monthName @claim.Year</td>
+								<td><span class="badge @statusClass">@claim.Status</span></td>
+								<td class="text-end">@claim.TotalHours.ToString("N2") hrs</td>
+								<td class="text-end fw-semibold">R @claim.Amount.ToString("N2")</td>
+								<td class="text-center">
+									<div class="btn-group btn-group-sm" role="group">
+										<a class="btn btn-outline-primary" asp-action="TrackClaim" asp-route-id="@claim.Id" title="Track Status">
+											Track
+										</a>
+										<a class="btn btn-outline-secondary" asp-action="UploadDocuments" asp-route-id="@claim.Id" title="Upload Documents">
+											Documents
+										</a>
+									</div>
+								</td>
+							</tr>
+						}
+					}
+					else
+					{
+						<tr>
+							<td colspan="6" class="text-center text-muted py-5">
+								<div class="mb-3">
+									<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-inbox" viewBox="0 0 16 16">
+										<path d="M4.98 4a.5.5 0 0 0-.39.188L1.54 8H6a.5.5 0 0 1 .5.5 1.5 1.5 0 1 0 3 0A.5.5 0 0 1 10 8h4.46l-3.05-3.812A.5.5 0 0 0 11.02 4H4.98zm9.954 5H10.45a2.5 2.5 0 0 1-4.9 0H1.066l.32 2.562a.5.5 0 0 0 .497.438h12.234a.5.5 0 0 0 .496-.438L14.933 9zM3.809 3.563A1.5 1.5 0 0 1 4.981 3h6.038a1.5 1.5 0 0 1 1.172.563l3.7 4.625a.5.5 0 0 1 .105.374l-.39 3.124A1.5 1.5 0 0 1 14.117 13H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .106-.374l3.7-4.625z"/>
+									</svg>
+								</div>
+								<h5>No claims yet</h5>
+								<p>Start by submitting your first claim</p>
+								<a asp-action="Submit" class="btn btn-primary mt-2">Submit Your First Claim</a>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+

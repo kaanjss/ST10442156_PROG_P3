@@ -1,0 +1,125 @@
+@model IEnumerable<CMCS.Web.Models.Claim>
+@{
+	ViewData["Title"] = "Approved Claims - Payment Processing";
+}
+
+<div class="row">
+	<div class="col-12">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div>
+				<h1 class="mb-1">Approved Claims</h1>
+				<p class="text-muted mb-0">Process payments and generate invoices for approved claims</p>
+			</div>
+			<div>
+				<a asp-action="Dashboard" class="btn btn-outline-secondary">← Back to Dashboard</a>
+			</div>
+		</div>
+
+		@if (TempData["SuccessMessage"] != null)
+		{
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Success!</strong> @TempData["SuccessMessage"]
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
+
+		@if (TempData["ErrorMessage"] != null)
+		{
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Error!</strong> @TempData["ErrorMessage"]
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		}
+
+		<div class="card border-0">
+			<div class="card-header bg-white border-bottom">
+				<h5 class="card-title mb-0">Claims Ready for Payment Processing</h5>
+			</div>
+			<div class="card-body p-0">
+				@if (Model.Any())
+				{
+					<div class="table-responsive">
+						<table class="table table-hover mb-0">
+							<thead class="table-light">
+								<tr>
+									<th style="width: 8%;">Claim #</th>
+									<th style="width: 17%;">Period</th>
+									<th style="width: 12%;">Lecturer ID</th>
+									<th style="width: 12%;" class="text-end">Total Hours</th>
+									<th style="width: 12%;" class="text-end">Hourly Rate</th>
+									<th style="width: 13%;" class="text-end">Gross Amount</th>
+									<th style="width: 13%;" class="text-end">Net Amount</th>
+									<th style="width: 13%;" class="text-center">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var claim in Model)
+								{
+									var monthName = new DateTime(claim.Year, claim.Month, 1).ToString("MMMM");
+									var netAmount = claim.Amount * 0.8m; // After 20% tax
+
+									<tr>
+										<td class="fw-bold text-success">#@claim.Id</td>
+										<td>@monthName @claim.Year</td>
+										<td>Lecturer @claim.LecturerId</td>
+										<td class="text-end">@claim.TotalHours.ToString("N2") hrs</td>
+										<td class="text-end">R @claim.HourlyRate.ToString("N2")</td>
+										<td class="text-end fw-semibold">R @claim.Amount.ToString("N2")</td>
+										<td class="text-end fw-semibold text-success">R @netAmount.ToString("N2")</td>
+										<td class="text-center">
+											<div class="btn-group btn-group-sm" role="group">
+												<form asp-action="GenerateInvoice" method="post" class="d-inline">
+													@Html.AntiForgeryToken()
+													<input type="hidden" name="claimId" value="@claim.Id" />
+													<button type="submit" class="btn btn-outline-primary" title="Generate Invoice">
+														<i class="bi bi-file-earmark-text"></i> Invoice
+													</button>
+												</form>
+											</div>
+										</td>
+									</tr>
+								}
+							</tbody>
+							<tfoot class="table-light">
+								<tr class="fw-bold">
+									<td colspan="5" class="text-end">Total:</td>
+									<td class="text-end">R @Model.Sum(c => c.Amount).ToString("N2")</td>
+									<td class="text-end text-success">R @Model.Sum(c => c.Amount * 0.8m).ToString("N2")</td>
+									<td></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				}
+				else
+				{
+					<div class="text-center py-5 text-muted">
+						<div class="mb-3">
+							<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+								<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+								<path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+							</svg>
+						</div>
+						<h5>All caught up!</h5>
+						<p>There are no approved claims awaiting payment processing at the moment.</p>
+					</div>
+				}
+			</div>
+		</div>
+
+		<div class="mt-4">
+			<div class="card border-0 bg-light">
+				<div class="card-body">
+					<h6 class="fw-semibold mb-3">Payment Processing Information</h6>
+					<ul class="mb-0 small text-muted">
+						<li>Generate invoices for individual claims by clicking the "Invoice" button</li>
+						<li>Net amounts are calculated after 20% tax deduction</li>
+						<li>Processed claims will be marked as "Settled" and moved to payment history</li>
+						<li>Invoices can be viewed and downloaded for record keeping</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

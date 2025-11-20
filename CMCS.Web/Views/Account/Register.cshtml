@@ -1,0 +1,98 @@
+@model CMCS.Web.Models.ViewModels.RegisterViewModel
+@{
+	ViewData["Title"] = "Register";
+}
+
+<div class="container">
+	<div class="row justify-content-center mt-5">
+		<div class="col-md-6 col-lg-5">
+			<div class="card border-0 shadow-lg">
+				<div class="card-body p-5">
+					<div class="text-center mb-4">
+						<h2 class="fw-bold text-primary">Create Account</h2>
+						<p class="text-muted">Register for the CMCS</p>
+					</div>
+
+					<form asp-action="Register" method="post">
+						<div class="mb-3">
+							<label asp-for="FullName" class="form-label fw-semibold">
+								<i class="bi bi-person me-2"></i>Full Name
+							</label>
+							<input asp-for="FullName" class="form-control" placeholder="Enter your full name" />
+							<span asp-validation-for="FullName" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Email" class="form-label fw-semibold">
+								<i class="bi bi-envelope me-2"></i>Email Address
+							</label>
+							<input asp-for="Email" class="form-control" placeholder="Enter your email" autocomplete="username" />
+							<span asp-validation-for="Email" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Password" class="form-label fw-semibold">
+								<i class="bi bi-lock me-2"></i>Password
+							</label>
+							<input asp-for="Password" class="form-control" placeholder="Enter a strong password" autocomplete="new-password" />
+							<span asp-validation-for="Password" class="text-danger small"></span>
+							<small class="form-text text-muted">
+								Password must be at least 6 characters with uppercase, lowercase, and a digit.
+							</small>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="ConfirmPassword" class="form-label fw-semibold">
+								<i class="bi bi-lock-fill me-2"></i>Confirm Password
+							</label>
+							<input asp-for="ConfirmPassword" class="form-control" placeholder="Re-enter your password" autocomplete="new-password" />
+							<span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Role" class="form-label fw-semibold">
+								<i class="bi bi-person-badge me-2"></i>Register As
+							</label>
+							<select asp-for="Role" class="form-select">
+								<option value="Lecturer">Lecturer</option>
+								<option value="ProgrammeCoordinator">Programme Coordinator</option>
+								<option value="AcademicManager">Academic Manager</option>
+								<option value="HR">HR Staff</option>
+							</select>
+							<span asp-validation-for="Role" class="text-danger small"></span>
+							<small class="form-text text-muted">
+								Select your role in the organization.
+							</small>
+						</div>
+
+						<div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+						<div class="d-grid mb-3">
+							<button type="submit" class="btn btn-primary btn-lg">
+								<i class="bi bi-person-plus me-2"></i>Create Account
+							</button>
+						</div>
+
+						<div class="text-center">
+							<p class="text-muted mb-0">
+								Already have an account? 
+								<a asp-action="Login" class="text-primary fw-semibold">Sign in</a>
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="text-center mt-3">
+				<a asp-controller="Home" asp-action="Index" class="text-muted">
+					<i class="bi bi-arrow-left me-2"></i>Back to Home
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

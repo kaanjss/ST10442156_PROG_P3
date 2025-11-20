@@ -1,0 +1,162 @@
+@model CMCS.Web.Models.ViewModels.LoginViewModel
+@{
+	ViewData["Title"] = "Login";
+}
+
+<div class="container">
+	<div class="row justify-content-center mt-5">
+		<div class="col-md-6 col-lg-5">
+			<div class="card border-0 shadow-lg">
+				<div class="card-body p-5">
+					<div class="text-center mb-4">
+						<h2 class="fw-bold text-primary">Contract Monthly Claim System</h2>
+						<p class="text-muted">Sign in to your account</p>
+					</div>
+
+					@if (TempData["ErrorMessage"] != null)
+					{
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							@TempData["ErrorMessage"]
+							<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+						</div>
+					}
+
+					<form asp-action="Login" method="post">
+						<input type="hidden" asp-for="ReturnUrl" />
+						
+						<div class="mb-3">
+							<label asp-for="Email" class="form-label fw-semibold">
+								<i class="bi bi-envelope me-2"></i>Email Address
+							</label>
+							<input asp-for="Email" class="form-control form-control-lg" placeholder="Enter your email" autocomplete="username" />
+							<span asp-validation-for="Email" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3">
+							<label asp-for="Password" class="form-label fw-semibold">
+								<i class="bi bi-lock me-2"></i>Password
+							</label>
+							<input asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" autocomplete="current-password" />
+							<span asp-validation-for="Password" class="text-danger small"></span>
+						</div>
+
+						<div class="mb-3 form-check">
+							<input asp-for="RememberMe" class="form-check-input" />
+							<label asp-for="RememberMe" class="form-check-label">
+								Remember me on this device
+							</label>
+						</div>
+
+						<div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+						<div class="d-grid mb-3">
+							<button type="submit" class="btn btn-primary btn-lg">
+								<i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+							</button>
+						</div>
+
+						<div class="text-center">
+							<p class="text-muted mb-0">
+								Don't have an account? 
+								<a asp-action="Register" class="text-primary fw-semibold">Create one</a>
+							</p>
+						</div>
+					</form>
+
+					<hr class="my-4" />
+
+					<div class="card border-primary border-2">
+						<div class="card-header bg-primary text-white">
+							<h5 class="card-title mb-0">
+								<i class="bi bi-key-fill me-2"></i>Demo Accounts for Testing
+							</h5>
+						</div>
+						<div class="card-body p-4">
+							<p class="text-muted mb-3">
+								<strong>For Lecturer/Instructor:</strong> Use these credentials to test all user roles and features.
+							</p>
+							
+							<div class="row g-3">
+								<div class="col-md-6">
+									<div class="card border-success">
+										<div class="card-body">
+											<h6 class="text-success fw-bold mb-2">
+												<i class="bi bi-person-badge me-2"></i>Lecturer Role
+											</h6>
+											<p class="mb-1"><strong>Email:</strong></p>
+											<code class="d-block mb-2">lecturer@university.ac.za</code>
+											<p class="mb-1"><strong>Password:</strong></p>
+											<code class="d-block">Lecturer123</code>
+											<small class="text-muted d-block mt-2">Access: Submit Claims, Track Claims</small>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="card border-warning">
+										<div class="card-body">
+											<h6 class="text-warning fw-bold mb-2">
+												<i class="bi bi-check-circle me-2"></i>Coordinator Role
+											</h6>
+											<p class="mb-1"><strong>Email:</strong></p>
+											<code class="d-block mb-2">coordinator@university.ac.za</code>
+											<p class="mb-1"><strong>Password:</strong></p>
+											<code class="d-block">Coordinator123</code>
+											<small class="text-muted d-block mt-2">Access: Verify Claims</small>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-md-6">
+									<div class="card border-info">
+										<div class="card-body">
+											<h6 class="text-info fw-bold mb-2">
+												<i class="bi bi-clipboard-check me-2"></i>Manager Role
+											</h6>
+											<p class="mb-1"><strong>Email:</strong></p>
+											<code class="d-block mb-2">manager@university.ac.za</code>
+											<p class="mb-1"><strong>Password:</strong></p>
+											<code class="d-block">Manager123</code>
+											<small class="text-muted d-block mt-2">Access: Approve Claims</small>
+										</div>
+									</div>
+								</div>
+								
+							<div class="col-md-6">
+								<div class="card border-danger">
+									<div class="card-body">
+										<h6 class="text-danger fw-bold mb-2">
+											<i class="bi bi-building me-2"></i>HR Role
+										</h6>
+										<p class="mb-1"><strong>Email:</strong></p>
+										<code class="d-block mb-2">hr@university.ac.za</code>
+										<p class="mb-1"><strong>Password:</strong></p>
+										<code class="d-block">HrStaff123</code>
+										<small class="text-muted d-block mt-2">Access: Process Payments, Manage Lecturers</small>
+									</div>
+								</div>
+							</div>
+							</div>
+							
+							<div class="alert alert-info mt-3 mb-0">
+								<i class="bi bi-lightbulb me-2"></i>
+								<strong>Tip:</strong> All passwords follow the format: <code>RoleName123</code>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center mt-3">
+				<a asp-controller="Home" asp-action="Index" class="text-muted">
+					<i class="bi bi-arrow-left me-2"></i>Back to Home
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

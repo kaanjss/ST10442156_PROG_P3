@@ -1,0 +1,40 @@
+@model CMCS.Web.Services.Invoice
+@{
+	ViewData["Title"] = "Invoice " + Model.InvoiceNumber;
+	var monthName = new DateTime(Model.Year, Model.Month, 1).ToString("MMMM yyyy");
+}
+
+<div class="row">
+	<div class="col-lg-10 mx-auto">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<div>
+				<h1 class="mb-1">Invoice Details</h1>
+				<p class="text-muted mb-0">@Model.InvoiceNumber</p>
+			</div>
+			<div>
+				<a asp-action="ApprovedClaims" class="btn btn-outline-secondary">← Back to Claims</a>
+				<button class="btn btn-primary" onclick="window.print()">
+					<i class="bi bi-printer"></i> Print Invoice
+				</button>
+			</div>
+		</div>
+
+		<div class="card border-0 shadow-sm">
+			<div class="card-body p-5">
+				@Html.Raw(ViewBag.InvoiceHtml)
+			</div>
+		</div>
+
+		<div class="mt-4 text-center text-muted small">
+			<p class="mb-0">Generated on @Model.GeneratedDate.ToString("yyyy-MM-dd HH:mm:ss") UTC</p>
+		</div>
+	</div>
+</div>
+
+@section Styles {
+	<style media="print">
+		.btn, .navbar, footer, nav { display: none !important; }
+		.col-lg-10 { max-width: 100% !important; }
+	</style>
+}
+

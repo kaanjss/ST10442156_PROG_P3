@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="text-center mb-5">
+            <h1 class="display-4 mb-3">Contract Monthly Claim System</h1>
+            <p class="lead text-muted">Streamlined claim management for lecturers and administrators</p>
+        </div>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card portal-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="text-primary" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </div>
+                        <h5 class="card-title mb-3">Lecturer Portal</h5>
+                        <p class="card-text text-muted mb-4">Submit monthly claims, upload supporting documents, and track claim status in real-time.</p>
+                        <a class="btn btn-gradient w-100" asp-controller="Lecturer" asp-action="Dashboard">Access Portal →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card portal-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+                                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
+                            </svg>
+                        </div>
+                        <h5 class="card-title mb-3">Programme Coordinator</h5>
+                        <p class="card-text text-muted mb-4">Review and verify submitted claims from lecturers with automated validation checks.</p>
+                        <a class="btn btn-outline-success w-100" asp-controller="Admin" asp-action="Coordinator">Access Portal →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card portal-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="text-info" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                            </svg>
+                        </div>
+                        <h5 class="card-title mb-3">Academic Manager</h5>
+                        <p class="card-text text-muted mb-4">Review verified claims and provide final approval for payment processing.</p>
+                        <a class="btn btn-outline-info w-100" asp-controller="Admin" asp-action="Manager">Access Portal →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-md-12">
+                <div class="card portal-card">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-wrapper mx-auto mb-3" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                            </svg>
+                        </div>
+                        <h5 class="card-title mb-3">HR Portal</h5>
+                        <p class="card-text text-muted mb-4">Process approved claims, generate invoices, manage lecturer information, and create reports.</p>
+                        <a class="btn btn-success" asp-controller="HR" asp-action="Dashboard">Access HR Portal →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 bg-light">
+            <div class="card-body p-4">
+                <h5 class="card-title mb-3">System Overview</h5>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <h6 class="fw-semibold">For Lecturers</h6>
+                        <ul class="text-muted small mb-0">
+                            <li>Submit monthly claims with detailed activities</li>
+                            <li>Upload supporting documentation</li>
+                            <li>Track claim status in real-time</li>
+                            <li>View claim history and summaries</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-semibold">For Administrators</h6>
+                        <ul class="text-muted small mb-0">
+                            <li>Review and verify submitted claims</li>
+                            <li>Approve or reject with comments</li>
+                            <li>View detailed claim information</li>
+                            <li>Manage workflow efficiently</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

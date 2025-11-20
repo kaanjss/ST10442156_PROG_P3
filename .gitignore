@@ -1,0 +1,20 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.ide/
+*.sln.docstates
+TestResult*/
+[Bb]uild/
+*.nupkg
+*.snupkg
+.idea/
+.DS_Store
+node_modules/
+wwwroot/uploads/
+
+# Ignore all markdown files except README
+*.md
+!README.md
