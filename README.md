@@ -192,6 +192,32 @@ setup_database.sql  # Database setup
 
 ---
 
+## References
+
+This project was developed using the following resources and documentation:
+
+### **Framework & Library Documentation**
+- Microsoft ASP.NET Core 8.0 Documentation - https://docs.microsoft.com/aspnet/core
+- Entity Framework Core Documentation - https://docs.microsoft.com/ef/core
+- ASP.NET Core Identity Documentation - https://docs.microsoft.com/aspnet/core/security/authentication/identity
+- Bootstrap 5 Documentation - https://getbootstrap.com/docs/5.0
+- jQuery Documentation - https://jquery.com
+- xUnit Testing Framework - https://xunit.net
+
+### **Academic Resources**
+- PROG6212 Programming 2B Learning Unit Guide
+- PROG6212 Lecture Notes and Materials
+- IIE Module Content and Requirements
+
+### **Development Tools**
+- Visual Studio 2022 Documentation
+- SQL Server Management Studio Documentation
+- Git Version Control Documentation
+
+All code implementations follow official documentation and best practices as outlined in the referenced materials.
+
+---
+
 ## Contact
 
 **Student:** ST10442156  
