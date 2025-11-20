@@ -260,3 +260,4 @@ PRINT 'Database setup complete!';
 PRINT 'Start the application - it will create demo users automatically.';
 GO
 
+ 
