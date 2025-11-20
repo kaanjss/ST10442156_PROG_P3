@@ -1,6 +1,6 @@
 -- =============================================
 -- CMCS Database Setup Script
--- Student: ST10447819
+-- Student: ST10442156
 -- Run this script to set up the database locally
 -- =============================================
 
